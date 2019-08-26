@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const packageInfo = require('./package.json');
+const http = require("http");
 
 
 const app = express();
@@ -15,6 +16,10 @@ var server = app.listen(process.env.PORT, "0.0.0.0", () => {
   const port = server.address().port;
   console.log('Web server started at http://%s:%s', host, port);
 });
+
+setInterval(function() {
+    http.get("http://<your app name>.herokuapp.com");
+}, 300000); // every 5 minutes (300000)
 
 module.exports = (bot) => {
   app.post('/' + bot.token, (req, res) => {
