@@ -146,7 +146,7 @@ bot.on('photo', (msg) => {
 
 //various functions
 
-async function getImages(type){
+function getImages(type){
     memeImages = [];
     hmmmImages = [];
     greenTextImages = [];
@@ -162,7 +162,7 @@ async function getImages(type){
 }
 
 
-async function storeResponse(json, type){
+function storeResponse(json, type){
     let imageType;
 
     for(let i = 0, x = json.data.children.length; i < x; i++){
