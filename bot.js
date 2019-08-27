@@ -42,9 +42,9 @@ bot.command('/start', (msg) => {
                     `6. Send me /dankmeme to cry..\n`,
     keyboard.draw());
 });
-bot.command('/refresh', (msg) => {
+bot.command('/refresh', async (msg) => {
     for(let i = 0; i < redditR.length; i++){
-        getImages(redditR[i]);
+        await getImages(redditR[i]);
     }
     msg.reply('Refresh done.')
 });
@@ -147,6 +147,11 @@ bot.on('photo', (msg) => {
 //various functions
 
 async function getImages(type){
+    memeImages = [];
+    hmmmImages = [];
+    greenTextImages = [];
+    cursedImages = [];
+    dankmemeImages = [];
     request.get(`https://www.reddit.com/r/${type}/.json?&show=all&limit=1000`,function(error,response,body){
         if(error){
             console.log(error);
