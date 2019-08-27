@@ -2,8 +2,7 @@ const fs = require('fs');
 const Telegraf = require('telegraf');
 const Keyboard = require('telegraf-keyboard');
 const request = require('request');
-const lines = fs.readFileSync('files/parole.txt').toString().split("\n");
-const token = "814752031:AAE8x6unJwSKvXowaBqc1UxBjOxCKrX6dj4";
+const token = process.env.BOT_TOKEN;
 const redditR = ['dankmeme','hmmm','greentext','Cursed_Images', 'meme'];
 var dankmemeImages = [];
 var memeImages = [];
@@ -35,44 +34,64 @@ bot.command('/start', (msg) => {
         .add('/greentext','/cursed','/dankmeme');
     msg.reply(`Hello ${msg.update.message.from.first_name}!\n`+
                     `I can do some things:\n`+
-                    `1. Send me a photo so i can find your emotion..\n`+
-                    `2. Send me /refresh to refresh the images\n`+
-                    `3. Send me /meme to get a new fresh meme and enjoy the world of reddit!\n`+
-                    `4. Send me /hmmm to hmmm!\n`+
-                    `5. Send me /greentext - 4chan?\n`+
-                    `6. Send me /cursed to get cursed..\n`+
-                    `7. Send me /dankmeme to cry..\n`,
+                    `1. Send me /refresh to refresh the images\n`+
+                    `2. Send me /meme to get a new fresh meme and enjoy the world of reddit!\n`+
+                    `3. Send me /hmmm to hmmm!\n`+
+                    `4. Send me /greentext - 4chan?\n`+
+                    `5. Send me /cursed to get cursed..\n`+
+                    `6. Send me /dankmeme to cry..\n`,
     keyboard.draw());
 });
 bot.command('/refresh', (msg) => {
     for(let i = 0; i < redditR.length; i++){
         getImages(redditR[i]);
     }
-});
-bot.command('/indie', (msg) => {
-    msg.reply(lines[Math.floor(Math.random()*lines.length)]+" "+
-              lines[Math.floor(Math.random()*lines.length)]+" "+
-              lines[Math.floor(Math.random()*lines.length)]);
+    msg.reply('Refresh done.')
 });
 
 bot.command('/dankmeme', (msg) => {
-    msg.replyWithPhoto({ url: dankmemeImages.pop()});
+    if(dankmemeImages.length == 0){
+        msg.reply('No images, send me /refresh');
+    }else{
+        msg.replyWithPhoto({ url: dankmemeImages.pop()});
+        msg.reply(`Images remaining: ${dankmemeImages.length}`);
+    }
 });
 
 bot.command('/hmmm', (msg) => {
-    msg.replyWithPhoto({ url: hmmmImages.pop()});
+    if(hmmmImages.length == 0){
+        msg.reply('No images, send me /refresh');
+    }else{
+        msg.replyWithPhoto({ url: hmmmImages.pop()});
+        msg.reply(`Images remaining: ${hmmmImages.length}`);
+    }
 });
 
 bot.command('/greentext', (msg) => {
-    msg.replyWithPhoto({ url: greenTextImages.pop()});
+    if(greenTextImages.length == 0){
+        msg.reply('No images, send me /refresh');
+    }else{
+        msg.replyWithPhoto({ url: greenTextImages.pop()});
+        msg.reply(`Images remaining: ${greenTextImages.length}`);
+    }
 });
 
 bot.command('/cursed', (msg) => {
-    msg.replyWithPhoto({ url: cursedImages.pop()});
+    if(dankmemeImages.length == 0){
+        msg.reply('No images, send me /refresh');
+    }else{
+        msg.replyWithPhoto({ url: cursedImages.pop()});
+        msg.reply(`Images remaining: ${cursedImages.length}`);
+    }
 });
 
 bot.command('/meme', (msg) => {
-    msg.replyWithPhoto({ url: memeImages.pop()});
+    if(memeImages.length == 0){
+        msg.reply('No images, send me /refresh');
+    }else{
+        msg.replyWithPhoto({ url: memeImages.pop()});
+        msg.reply(`Images remaining: ${memeImages.length}`);
+    }
 });
 
 bot.on('photo', (msg) => {
@@ -171,10 +190,6 @@ async function storeResponse(json, type){
         }
     }
     console.log("done "+type);
-}
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
 }
 
 init();
