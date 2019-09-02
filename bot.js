@@ -117,7 +117,7 @@ bot.on('photo', (msg) => {
             body: '{"url": ' + '"' + imageUrl + '"}',
             headers: {
                 'Content-Type': 'application/json',
-                'Ocp-Apim-Subscription-Key' : "a67fce2f849045a2be675ad29f6dc36a"
+                'Ocp-Apim-Subscription-Key' : process.env.AZURE_FACE_KEY
             }
         };
         request.post(options, (error, response, body) => {
