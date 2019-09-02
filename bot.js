@@ -111,9 +111,9 @@ bot.on('photo', (msg) => {
             'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
             'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
             };
-            
+
         const options = {
-            uri: 'https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect',
+            uri: 'https://proj-tesina-face-recognition.cognitiveservices.azure.com/face/v1.0//detect',
             qs: params,
             body: '{"url": ' + '"' + imageUrl + '"}',
             headers: {
