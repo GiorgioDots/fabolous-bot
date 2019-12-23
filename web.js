@@ -17,8 +17,8 @@ var server = app.listen(process.env.PORT, "0.0.0.0", () => {
   console.log('Web server started at http://%s:%s', host, port);
 });
 
-setInterval(function() {
-    http.get("http://fabolousbot.herokuapp.com");
+setInterval(function () {
+  http.get("http://fabolous-bot.herokuapp.com");
 }, 300000); // every 5 minutes (300000)
 
 module.exports = (bot) => {
