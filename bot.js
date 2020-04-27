@@ -94,56 +94,6 @@ bot.command('/meme', (msg) => {
     }
 });
 
-bot.on('photo', (msg) => {
-    console.log(msg.update.message.photo.length);
-    var url = `https://api.telegram.org/bot${token}/getFile?file_id=${msg.update.message.photo[(msg.update.message.photo.length-1)].file_id}`;
-    request.get(url, function(error,response,body){
-        if(error){
-            console.log(error);
-            msg.reply("Something went wrong");
-        }
-        var parsedData = JSON.parse(body);
-        var filePath = parsedData['result']['file_path'];
-        var imageUrl = `https://api.telegram.org/file/bot${token}/${filePath}`;
-        const params = {
-            'returnFaceId': 'true',
-            'returnFaceLandmarks': 'false',
-            'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
-            'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
-            };
-
-        const options = {
-            uri: 'https://proj-tesina-face-recognition.cognitiveservices.azure.com/face/v1.0//detect',
-            qs: params,
-            body: '{"url": ' + '"' + imageUrl + '"}',
-            headers: {
-                'Content-Type': 'application/json',
-                'Ocp-Apim-Subscription-Key' : process.env.AZURE_FACE_KEY
-            }
-        };
-        request.post(options, (error, response, body) => {
-            if (error) {
-                console.log(error);
-                msg.reply("Something went wrong");
-            }
-            let jsonResponse = JSON.parse(body);
-            var emotions = jsonResponse[0].faceAttributes.emotion;
-
-            msg.reply("arrabbiato: "+emotions.anger*100+"%;\n"+
-                        "offeso: "+emotions.contempt*100+"%;\n"+
-                        "disgustato: "+emotions.disgust*100+"%;\n"+
-                        "spaventato: "+emotions.fear*100+"%;\n"+
-                        "felice: "+emotions.happiness*100+"%;\n"+
-                        "neutro: "+emotions.neutral*100+"%;\n"+
-                        "triste: "+emotions.sadness*100+"%;\n"+
-                        "sorpreso: "+emotions.surprise*100+"%;");
-        });
-    });
-});
-
-
-
-
 
 //various functions
 
