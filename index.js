@@ -1,4 +1,22 @@
 require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const packageInfo = require("./package.json");
+const bot = require("./bot");
 
-var bot = require('./bot');
-require('./web')(bot); 
+const app = express();
+app.use(bodyParser.json());
+
+app.get("/", function (req, res) {
+  res.json({ version: packageInfo.version });
+});
+app.post("/" + bot.token, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
+
+var server = app.listen(process.env.PORT, "0.0.0.0", () => {
+  const host = server.address().address;
+  const port = server.address().port;
+  console.log("Web server started at http://%s:%s", host, port);
+});
