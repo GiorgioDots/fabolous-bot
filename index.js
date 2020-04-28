@@ -1,22 +1,18 @@
 require("dotenv").config();
-const express = require("express");
-const bodyParser = require("body-parser");
-const packageInfo = require("./package.json");
-const bot = require("./bot");
 
-const app = express();
-app.use(bodyParser.json());
+const bot = require("./modules/telegraf");
+const logger = require("./modules/logger");
 
-app.get("/", function (req, res) {
-  res.json({ version: packageInfo.version });
-});
-app.post("/" + bot.token, (req, res) => {
-  bot.processUpdate(req.body);
-  res.sendStatus(200);
-});
+logger.info("starting bot..");
 
-var server = app.listen(process.env.PORT, "0.0.0.0", () => {
-  const host = server.address().address;
-  const port = server.address().port;
-  console.log("Web server started at http://%s:%s", host, port);
-});
+logger.info("setting bot webhook..");
+
+bot.telegram.setWebhook(
+  `${process.env.BOT_HEROKU_URL}/bot${process.env.BOT_TOKEN}`
+);
+
+logger.info("starting bot webhook..");
+
+bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);
+
+logger.info("bot started");
