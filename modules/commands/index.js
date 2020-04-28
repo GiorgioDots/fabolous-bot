@@ -34,16 +34,16 @@ exports.refresh = async (ctx) => {
 };
 
 exports.dankMeme = async (ctx) => {
+  console.log(ctx.session);
   try {
     if (!ctx.session.dankmemeImages) {
       await reddit.getRImages("dankmeme", ctx);
     }
     if (ctx.session.dankmemeImages.length == 0) {
       await reddit.getRImages("dankmeme", ctx);
-    } else {
-      msg.replyWithPhoto({ url: dankmemeImages.pop() });
-      msg.reply(`Images remaining: ${dankmemeImages.length}`);
     }
+    msg.replyWithPhoto({ url: dankmemeImages.pop() });
+    msg.reply(`Images remaining: ${dankmemeImages.length}`);
   } catch (error) {
     ctx.reply("An error occured while fetching dankmemeimages the images.");
   }
