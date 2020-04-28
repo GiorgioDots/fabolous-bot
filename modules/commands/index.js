@@ -63,8 +63,8 @@ exports.hmmm = async (ctx) => {
       ctx.session.hmmmImages = [];
       await reddit.getRImages("hmmm", ctx);
     }
-    ctx.replyWithPhoto({ url: ctx.session.hmmmImages.pop() });
     ctx.reply(`Images remaining: ${ctx.session.hmmmImages.length}`);
+    ctx.replyWithPhoto({ url: ctx.session.hmmmImages.pop() });
   } catch (error) {
     console.error(error);
     ctx.reply("An error occured while fetching hmmm images.");
