@@ -45,8 +45,8 @@ exports.dankMeme = async (ctx) => {
       ctx.session.dankmemeImages = [];
       await reddit.getRImages("dankmeme", ctx);
     }
+    ctx.reply(`Images remaining: ${ctx.session.dankmemeImages.length - 1}`);
     ctx.replyWithPhoto({ url: ctx.session.dankmemeImages.pop() });
-    ctx.reply(`Images remaining: ${ctx.session.dankmemeImages.length}`);
   } catch (error) {
     console.error(error);
     ctx.reply("An error occured while fetching dankmeme images.");
@@ -63,7 +63,7 @@ exports.hmmm = async (ctx) => {
       ctx.session.hmmmImages = [];
       await reddit.getRImages("hmmm", ctx);
     }
-    ctx.reply(`Images remaining: ${ctx.session.hmmmImages.length}`);
+    ctx.reply(`Images remaining: ${ctx.session.hmmmImages.length - 1}`);
     ctx.replyWithPhoto({ url: ctx.session.hmmmImages.pop() });
   } catch (error) {
     console.error(error);
@@ -81,8 +81,8 @@ exports.greenText = async (ctx) => {
       ctx.session.greenTextImages = [];
       await reddit.getRImages("greentext", ctx);
     }
+    ctx.reply(`Images remaining: ${ctx.session.greenTextImages.length - 1}`);
     ctx.replyWithPhoto({ url: ctx.session.greenTextImages.pop() });
-    ctx.reply(`Images remaining: ${ctx.session.greenTextImages.length}`);
   } catch (error) {
     console.error(error);
     ctx.reply("An error occured while fetching greentext images.");
@@ -99,8 +99,8 @@ exports.cursed = async (ctx) => {
       ctx.session.cursedImages = [];
       await reddit.getRImages("Cursed_Images", ctx);
     }
+    ctx.reply(`Images remaining: ${ctx.session.cursedImages.length - 1}`);
     ctx.replyWithPhoto({ url: ctx.session.cursedImages.pop() });
-    ctx.reply(`Images remaining: ${ctx.session.cursedImages.length}`);
   } catch (error) {
     console.error(error);
     ctx.reply("An error occured while fetching cursed images.");
@@ -117,8 +117,8 @@ exports.meme = async (ctx) => {
       ctx.session.memeImages = [];
       await reddit.getRImages("meme", ctx);
     }
+    ctx.reply(`Images remaining: ${ctx.session.memeImages.length - 1}`);
     ctx.replyWithPhoto({ url: ctx.session.memeImages.pop() });
-    ctx.reply(`Images remaining: ${ctx.session.memeImages.length}`);
   } catch (error) {
     console.error(error);
     ctx.reply("An error occured while fetching meme images.");
