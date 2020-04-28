@@ -7,9 +7,11 @@ const redditR = ["dankmeme", "hmmm", "greentext", "Cursed_Images", "meme"];
 exports.getImages = async (ctx) => {
   try {
     for (let r of redditR) {
+      logger.info(`Fetching ${r} images.`);
       const res = await request.get(
         `https://www.reddit.com/r/${r}/.json?&show=all&limit=1000`
       );
+      logger.info(`Storing to session ${r} images.`);
       storeRImages(JSON.parse(res), r, ctx);
     }
     return Promise.resolve(true);
