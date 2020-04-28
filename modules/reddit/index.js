@@ -26,6 +26,11 @@ exports.getImages = async (ctx) => {
 
 const storeRImages = (json, r, ctx) => {
   let imageType;
+  ctx.session.memeImages = [];
+  ctx.session.hmmmImages = [];
+  ctx.session.greenTextImages = [];
+  ctx.session.cursedImages = [];
+  ctx.session.dankmemeImages = [];
   for (let children of json.data.children) {
     imageType = children.data.url.slice(-3);
     if (r == "meme") {
