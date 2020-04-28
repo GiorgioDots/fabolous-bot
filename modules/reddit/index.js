@@ -2,11 +2,11 @@ const request = require("request-promise-native");
 
 const logger = require("../logger");
 
-const redditR = ["dankmeme", "hmmm", "greentext", "Cursed_Images", "meme"];
+const redditRs = ["dankmeme", "hmmm", "greentext", "Cursed_Images", "meme"];
 
-exports.getImages = async (ctx) => {
+exports.getRsImages = async (ctx) => {
   try {
-    for (let r of redditR) {
+    for (let r of redditRs) {
       logger.info(`Fetching ${r} images.`);
       const res = await request.get(
         `https://www.reddit.com/r/${r}/.json?&show=all&limit=1000`
@@ -22,8 +22,23 @@ exports.getImages = async (ctx) => {
   }
 };
 
-/***UTILS***/
+exports.getRImages = async (r, ctx) => {
+  try {
+    logger.info(`Fetching ${r} images.`);
+    const res = await request.get(
+      `https://www.reddit.com/r/${r}/.json?&show=all&limit=1000`
+    );
+    logger.info(`Storing to session ${r} images.`);
+    storeRImages(JSON.parse(res), r, ctx);
+    return Promise.resolve(true);
+  } catch (error) {
+    logger.error(`Something went wrong while fetching the ${r} images:`);
+    console.error(error);
+    throw error;
+  }
+};
 
+/***UTILS***/
 const storeRImages = (json, r, ctx) => {
   let imageType;
   ctx.session.memeImages = [];
