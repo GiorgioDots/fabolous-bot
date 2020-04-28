@@ -5,10 +5,16 @@ const logger = require("../logger");
 const redditRs = ["dankmeme", "hmmm", "greentext", "Cursed_Images", "meme"];
 
 exports.getRsImages = async (ctx) => {
+  ctx.session.memeImages = [];
+  ctx.session.hmmmImages = [];
+  ctx.session.greenTextImages = [];
+  ctx.session.cursedImages = [];
+  ctx.session.dankmemeImages = [];
+  let res;
   try {
     for (let r of redditRs) {
       logger.info(`Fetching ${r} images.`);
-      const res = await request.get(
+      res = await request.get(
         `https://www.reddit.com/r/${r}/.json?&show=all&limit=1000`
       );
       logger.info(`Storing to session ${r} images.`);
@@ -41,11 +47,6 @@ exports.getRImages = async (r, ctx) => {
 /***UTILS***/
 const storeRImages = (json, r, ctx) => {
   let imageType;
-  ctx.session.memeImages = [];
-  ctx.session.hmmmImages = [];
-  ctx.session.greenTextImages = [];
-  ctx.session.cursedImages = [];
-  ctx.session.dankmemeImages = [];
   for (let children of json.data.children) {
     imageType = children.data.url.slice(-3);
     if (r == "meme") {

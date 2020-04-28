@@ -13,12 +13,12 @@ bot.command("/refresh", commands.refresh);
 
 bot.command("/dankmeme", commands.dankMeme);
 
-// bot.command("/hmmm");
+bot.command("/hmmm", commands.hmmm);
 
-// bot.command("/greentext");
+bot.command("/greentext", commands.greenText);
 
-// bot.command("/cursed");
+bot.command("/cursed", commands.cursed);
 
-// bot.command("/meme");
+bot.command("/meme", commands.meme);
 
 module.exports = bot;

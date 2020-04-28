@@ -24,27 +24,103 @@ exports.start = (ctx) => {
 
 exports.refresh = async (ctx) => {
   try {
+    ctx.reply("Refreshing, please wait..");
     const isDone = await reddit.getRsImages(ctx);
     if (isDone) {
       ctx.reply("Refresh done.");
     }
   } catch (error) {
+    console.error(error);
     ctx.reply("An error occured while refreshing the images.");
   }
 };
 
 exports.dankMeme = async (ctx) => {
-  console.log(ctx.session);
   try {
     if (!ctx.session.dankmemeImages) {
+      ctx.session.dankmemeImages = [];
       await reddit.getRImages("dankmeme", ctx);
     }
     if (ctx.session.dankmemeImages.length == 0) {
+      ctx.session.dankmemeImages = [];
       await reddit.getRImages("dankmeme", ctx);
     }
-    msg.replyWithPhoto({ url: dankmemeImages.pop() });
-    msg.reply(`Images remaining: ${dankmemeImages.length}`);
+    ctx.replyWithPhoto({ url: ctx.session.dankmemeImages.pop() });
+    ctx.reply(`Images remaining: ${ctx.session.dankmemeImages.length}`);
   } catch (error) {
-    ctx.reply("An error occured while fetching dankmemeimages the images.");
+    console.error(error);
+    ctx.reply("An error occured while fetching dankmeme images.");
+  }
+};
+
+exports.hmmm = async (ctx) => {
+  try {
+    if (!ctx.session.hmmmImages) {
+      ctx.session.hmmmImages = [];
+      await reddit.getRImages("hmmm", ctx);
+    }
+    if (ctx.session.hmmmImages.length == 0) {
+      ctx.session.hmmmImages = [];
+      await reddit.getRImages("hmmm", ctx);
+    }
+    ctx.replyWithPhoto({ url: ctx.session.hmmmImages.pop() });
+    ctx.reply(`Images remaining: ${ctx.session.hmmmImages.length}`);
+  } catch (error) {
+    console.error(error);
+    ctx.reply("An error occured while fetching hmmm images.");
+  }
+};
+
+exports.greenText = async (ctx) => {
+  try {
+    if (!ctx.session.greenTextImages) {
+      ctx.session.greenTextImages = [];
+      await reddit.getRImages("greentext", ctx);
+    }
+    if (ctx.session.greenTextImages.length == 0) {
+      ctx.session.greenTextImages = [];
+      await reddit.getRImages("greentext", ctx);
+    }
+    ctx.replyWithPhoto({ url: ctx.session.greenTextImages.pop() });
+    ctx.reply(`Images remaining: ${ctx.session.greenTextImages.length}`);
+  } catch (error) {
+    console.error(error);
+    ctx.reply("An error occured while fetching greentext images.");
+  }
+};
+
+exports.cursed = async (ctx) => {
+  try {
+    if (!ctx.session.cursedImages) {
+      ctx.session.cursedImages = [];
+      await reddit.getRImages("Cursed_Images", ctx);
+    }
+    if (ctx.session.cursedImages.length == 0) {
+      ctx.session.cursedImages = [];
+      await reddit.getRImages("Cursed_Images", ctx);
+    }
+    ctx.replyWithPhoto({ url: ctx.session.cursedImages.pop() });
+    ctx.reply(`Images remaining: ${ctx.session.cursedImages.length}`);
+  } catch (error) {
+    console.error(error);
+    ctx.reply("An error occured while fetching cursed images.");
+  }
+};
+
+exports.meme = async (ctx) => {
+  try {
+    if (!ctx.session.memeImages) {
+      ctx.session.memeImages = [];
+      await reddit.getRImages("meme", ctx);
+    }
+    if (ctx.session.memeImages.length == 0) {
+      ctx.session.memeImages = [];
+      await reddit.getRImages("meme", ctx);
+    }
+    ctx.replyWithPhoto({ url: ctx.session.memeImages.pop() });
+    ctx.reply(`Images remaining: ${ctx.session.memeImages.length}`);
+  } catch (error) {
+    console.error(error);
+    ctx.reply("An error occured while fetching meme images.");
   }
 };

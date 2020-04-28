@@ -15,4 +15,7 @@ logger.info("starting bot webhook..");
 
 bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);
 
+//FOR DEVELOPMENT
+// bot.launch();
+
 logger.info("bot started");
